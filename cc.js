@@ -1,11 +1,10 @@
-
 var num_digits = 16;
 var digits = [];
 
 digits[0] = 4;
 digits[num_digits - 1] = 'p';
 
-for (var i = num_digits - 2; i > 0; i--) {
+for (var i = num_digits - 2; i >= 0 && digits[i] == null; i--) {
   digits[i] = Math.floor(Math.random() * (9));
 }
 
