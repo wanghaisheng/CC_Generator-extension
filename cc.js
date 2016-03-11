@@ -1,12 +1,31 @@
 document.addEventListener('DOMContentLoaded', function () {
-  var e = document.getElementById("cc_issuer");
-  var issuer = e.options[e.selectedIndex].value;
-  document.getElementById("cc_number").innerHTML = getCCNumber(issuer);
-  e.addEventListener('change', function(){
-    var e = document.getElementById("cc_issuer");
-    var issuer = e.options[e.selectedIndex].value;
-    document.getElementById("cc_number").innerHTML = getCCNumber(issuer);
+  var cc_issuer = document.getElementById("cc_issuer");
+  var issuer = cc_issuer.options[cc_issuer.selectedIndex].value;
+  var cc_number = document.getElementById("cc_number");
+  var copy = document.getElementById("copy");
+  var refresh = document.getElementById("refresh");
+
+
+  cc_number.value = getCCNumber(issuer);
+  cc_number.select();
+
+  cc_issuer.addEventListener('change', function(){
+    issuer = cc_issuer.options[cc_issuer.selectedIndex].value;
+    cc_number.value = getCCNumber(issuer);
+    cc_number.select();
   });
+
+  copy.addEventListener('click', function() {
+    cc_number.select();
+    document.execCommand('copy');
+  });
+
+  refresh.addEventListener('click', function() {
+    issuer = cc_issuer.options[cc_issuer.selectedIndex].value;
+    cc_number.value = getCCNumber(issuer);
+    cc_number.select();
+  });
+
 }, false);
 
 function getCCNumber(issuer) {
@@ -14,13 +33,13 @@ function getCCNumber(issuer) {
   var num_digits = 0;
   switch (issuer) {
     case "visa":
-      num_digits = Math.floor(Math.random() * (16-13) + 13);
+      num_digits = 13 + 3 * Math.floor(Math.random() * (1 + 1));  // Get's either 13 or 16
       digits[0] = 4;
       break;
     case "mastercard":
       num_digits = 16;
       digits[0] = 5;
-      digits[1] = Math.floor(Math.random() * (5-1) + 1);
+      digits[1] = Math.floor(Math.random() * (5-1 + 1) + 1); // Digit between 1 and 5
       break;
     case "discover":
       num_digits = 16;
@@ -44,7 +63,7 @@ function getCCNumber(issuer) {
   digits[num_digits - 1] = 'p';
 
   for (var i = num_digits - 2; i >= 0 && digits[i] == null; i--) {
-    digits[i] = Math.floor(Math.random() * (9));
+    digits[i] = Math.floor(Math.random() * (9 + 1));
   }
 
   var sum = 0;
@@ -64,4 +83,22 @@ function getCCNumber(issuer) {
   }
   digits[num_digits - 1] = (-(sum % 10) + 10) % 10;
   return digits.join("");
+}
+
+function selectText(element) {
+  var doc = document
+    , text = doc.getElementById(element)
+    , range, selection
+    ;
+  if (doc.body.createTextRange) {
+    range = document.body.createTextRange();
+    range.moveToElementText(text);
+    range.select();
+  } else if (window.getSelection) {
+    selection = window.getSelection();
+    range = document.createRange();
+    range.selectNodeContents(text);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
 }
