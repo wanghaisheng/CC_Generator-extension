@@ -3,18 +3,29 @@
 <head>
     <title>Title</title>
     <script src="cc.js"></script>
+    <link rel="stylesheet" type="text/css" href="popup.css">
 </head>
 <body>
-    <select id="cc_issuer">
-        <option value="amex">American Express</option>
-        <option value="discover">Discover</option>
-        <option value="mastercard">Mastercard</option>
-        <option value="visa" selected="selected">Visa</option>
-    </select>
     <div>
-        <input type="text" id="cc_number" size="14" readonly>
-        <input type="button" id="copy" value="Copy">
-        <input type="button" id="refresh" value="Refresh">
+        <select id="cc_issuer">
+            <option value="amex">American Express</option>
+            <option value="discover">Discover</option>
+            <option value="mastercard">Mastercard</option>
+            <option value="visa" selected="selected">Visa</option>
+        </select>
+    </div>
+    <div>
+        <div class="cc_container">
+            <input type="text" id="cc_number" readonly>
+        </div>
+        <div class="actions">
+            <div id="refresh">
+                New Number
+            </div>
+            <div id="copy">
+                Copy To Clipboard
+            </div>
+        </div>
     </div>
 </body>
 </html>

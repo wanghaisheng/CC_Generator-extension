@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
 
-  "name": "Dev CC",
+  "name": "CC Generator",
   "description": "Generates a valid credit card number for development use.",
   "version": "0.1",
 
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html",
-    "default_title": "Generate CC"
+    "default_title": "CC Generator"
   },
   "permissions": [
     "activeTab",

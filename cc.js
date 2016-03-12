@@ -7,23 +7,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   cc_number.value = getCCNumber(issuer);
-  cc_number.select();
 
   cc_issuer.addEventListener('change', function(){
     issuer = cc_issuer.options[cc_issuer.selectedIndex].value;
     cc_number.value = getCCNumber(issuer);
+  });
+
+  cc_number.addEventListener('click', function() {
     cc_number.select();
   });
 
   copy.addEventListener('click', function() {
     cc_number.select();
     document.execCommand('copy');
+    window.close();
   });
 
   refresh.addEventListener('click', function() {
     issuer = cc_issuer.options[cc_issuer.selectedIndex].value;
     cc_number.value = getCCNumber(issuer);
-    cc_number.select();
   });
 
 }, false);
