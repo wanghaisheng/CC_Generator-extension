@@ -11,7 +11,6 @@
     "default_title": "CC Generator"
   },
   "permissions": [
-    "activeTab",
-    "https://ajax.googleapis.com/"
+    "storage"
   ]
 }

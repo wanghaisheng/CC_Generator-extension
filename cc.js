@@ -1,16 +1,37 @@
+var cc_issuer;
+var issuer;
+var cc_number;
+var copy;
+var refresh;
+
 document.addEventListener('DOMContentLoaded', function () {
-  var cc_issuer = document.getElementById("cc_issuer");
-  var issuer = cc_issuer.options[cc_issuer.selectedIndex].value;
-  var cc_number = document.getElementById("cc_number");
-  var copy = document.getElementById("copy");
-  var refresh = document.getElementById("refresh");
+  cc_issuer = document.getElementById("cc_issuer");
+  cc_number = document.getElementById("cc_number");
+  copy = document.getElementById("copy");
+  refresh = document.getElementById("refresh");
 
+  addListeners();
 
-  cc_number.value = getCCNumber(issuer);
+  issuer = chrome.storage.sync.get('selected_issuer', function(items){
+    issuer = items['selected_issuer'];
 
+    if (issuer) {
+      document.querySelector('#cc_issuer [value="' + issuer + '"]').selected = true;
+    }
+    else {
+      issuer = cc_issuer.options[cc_issuer.selectedIndex].value;
+    }
+
+    cc_number.value = getCCNumber(issuer);
+  });
+
+}, false);
+
+function addListeners() {
   cc_issuer.addEventListener('change', function(){
     issuer = cc_issuer.options[cc_issuer.selectedIndex].value;
     cc_number.value = getCCNumber(issuer);
+    chrome.storage.sync.set({'selected_issuer': issuer});
   });
 
   cc_number.addEventListener('click', function() {
@@ -27,8 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
     issuer = cc_issuer.options[cc_issuer.selectedIndex].value;
     cc_number.value = getCCNumber(issuer);
   });
-
-}, false);
+}
 
 function getCCNumber(issuer) {
   var digits = [];
@@ -85,22 +105,4 @@ function getCCNumber(issuer) {
   }
   digits[num_digits - 1] = (-(sum % 10) + 10) % 10;
   return digits.join("");
-}
-
-function selectText(element) {
-  var doc = document
-    , text = doc.getElementById(element)
-    , range, selection
-    ;
-  if (doc.body.createTextRange) {
-    range = document.body.createTextRange();
-    range.moveToElementText(text);
-    range.select();
-  } else if (window.getSelection) {
-    selection = window.getSelection();
-    range = document.createRange();
-    range.selectNodeContents(text);
-    selection.removeAllRanges();
-    selection.addRange(range);
-  }
 }
