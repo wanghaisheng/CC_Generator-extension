@@ -3,7 +3,7 @@
 
   "name": "CC Generator",
   "description": "Generates valid credit card numbers for development use.",
-  "version": "0.0.2",
+  "version": "1.0.0",
 
   "browser_action": {
     "default_icon": "icon.png",
