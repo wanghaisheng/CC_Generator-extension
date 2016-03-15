@@ -2,7 +2,6 @@
   "manifest_version": 2,
 
   "name": "CC Generator",
-  "description": "Generates a valid credit card number for development use.",
   "version": "0.0.2",
 
   "browser_action": {
