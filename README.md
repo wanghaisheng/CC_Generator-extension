@@ -10,6 +10,9 @@ A chrome extenstion that generates valid credit card numbers for development use
 
 * What about the CVV?
  * As these are for fake developement transactions, you can use any random 3 or 4 numbers.
+ 
+* Expiry date?
+ * Same as CVV. Just use a future date.
 
 * Can these be used in real life transactions?
  * No! Any attempts to do so are considered fraud and you may face legal ramifications if you do.
