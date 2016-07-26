@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Test Extension Options</title>
+  <link rel="stylesheet" type="text/css" href="options.css">
+</head>
+
+<body>
+
+<div id="custom-number-wrapper">
+  <h3 class="label">Custom Numbers</h3>
+  <p class="description">User defined numbers that will be randomly selected when the "Custom" card type is
+    selected. <span class="warning">This field is not secure. Do not use real credit card data.</span></p>
+  <textarea id="custom-numbers" rows="8" cols="50"></textarea>
+</div>
+
+<div id="new-number-toggle-wrapper">
+  <input type="checkbox" id="new-number-toggle">
+  <div class="description-block">
+    <h3 class="label">New number on load</h3>
+    <p class="description">Generate a new number every time the extension window is opened.</p>
+  </div>
+</div>
+
+<div id="save-wrapper">
+  <button id="save">Save</button>
+  <div id="save-status"></div>
+</div>
+
+<script src="options.js"></script>
+</body>
+</html>

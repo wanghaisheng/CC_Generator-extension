@@ -1,52 +1,79 @@
-var cc_issuer;
+var ccIssuer;
 var issuer;
-var cc_number;
+var ccNumber;
 var copy;
 var refresh;
+var customNumbers;
+var newNumberOnLoad;
+var loadedCC;
+var setNumbersText = "Set numbers in options";
+var optionsLink;
 
 document.addEventListener('DOMContentLoaded', function () {
-  cc_issuer = document.getElementById("cc_issuer");
-  cc_number = document.getElementById("cc_number");
+  ccIssuer = document.getElementById("cc_issuer");
+  ccNumber = document.getElementById("cc_number");
   copy = document.getElementById("copy");
   refresh = document.getElementById("refresh");
+  optionsLink = document.getElementById("options-link");
 
-  addListeners();
-
-  issuer = chrome.storage.sync.get('selected_issuer', function(items){
-    issuer = items['selected_issuer'];
+  chrome.storage.sync.get({
+    customNumbers: [],
+    newNumberOnLoad: true,
+    loadedCC: 0,
+    selected_issuer: false
+  }, function (items) {
+    customNumbers = items.customNumbers;
+    newNumberOnLoad = items.newNumberOnLoad;
+    loadedCC = items.loadedCC;
+    issuer = items.selected_issuer;
 
     if (issuer) {
       document.querySelector('#cc_issuer [value="' + issuer + '"]').selected = true;
     }
     else {
-      issuer = cc_issuer.options[cc_issuer.selectedIndex].value;
+      issuer = ccIssuer.options[ccIssuer.selectedIndex].value;
     }
 
-    cc_number.value = getCCNumber(issuer);
+    if (loadedCC == 0 || newNumberOnLoad) {
+      loadedCC = getCCNumber(issuer);
+    }
+
+    ccNumber.value = loadedCC;
   });
+
+  addListeners();
 
 }, false);
 
 function addListeners() {
-  cc_issuer.addEventListener('change', function(){
-    issuer = cc_issuer.options[cc_issuer.selectedIndex].value;
-    cc_number.value = getCCNumber(issuer);
+  ccIssuer.addEventListener('change', function () {
+    issuer = ccIssuer.options[ccIssuer.selectedIndex].value;
+    ccNumber.value = getCCNumber(issuer);
     chrome.storage.sync.set({'selected_issuer': issuer});
   });
 
-  cc_number.addEventListener('click', function() {
-    cc_number.select();
+  ccNumber.addEventListener('click', function () {
+    if (ccNumber.value == setNumbersText) {
+      chrome.runtime.openOptionsPage();
+    }
+    else {
+      ccNumber.select();
+    }
   });
 
-  copy.addEventListener('click', function() {
-    cc_number.select();
+  copy.addEventListener('click', function () {
+    ccNumber.select();
     document.execCommand('copy');
     window.close();
   });
 
-  refresh.addEventListener('click', function() {
-    issuer = cc_issuer.options[cc_issuer.selectedIndex].value;
-    cc_number.value = getCCNumber(issuer);
+  refresh.addEventListener('click', function () {
+    issuer = ccIssuer.options[ccIssuer.selectedIndex].value;
+    ccNumber.value = getCCNumber(issuer);
+  });
+
+  optionsLink.addEventListener('click', function () {
+    chrome.runtime.openOptionsPage();
   });
 }
 
@@ -61,7 +88,7 @@ function getCCNumber(issuer) {
     case "mastercard":
       num_digits = 16;
       digits[0] = 5;
-      digits[1] = Math.floor(Math.random() * (5-1 + 1) + 1); // Digit between 1 and 5
+      digits[1] = Math.floor(Math.random() * (5 - 1 + 1) + 1); // Digit between 1 and 5
       break;
     case "discover":
       num_digits = 16;
@@ -79,6 +106,8 @@ function getCCNumber(issuer) {
         digits[1] = 7;
       }
       break;
+    case "custom":
+      return getCustomValue();
   }
 
 
@@ -104,5 +133,22 @@ function getCCNumber(issuer) {
     count++;
   }
   digits[num_digits - 1] = (-(sum % 10) + 10) % 10;
-  return digits.join("");
+
+  var newCC = digits.join("");
+  chrome.storage.sync.set({loadedCC: newCC});
+  return newCC;
+}
+
+function getCustomValue() {
+  var numCount = customNumbers.length;
+  var newCC = 0;
+  if (numCount <= 0 || (numCount == 1 && customNumbers[0] == '')) {
+    newCC = setNumbersText;
+  }
+  else {
+    newCC = customNumbers[Math.floor(Math.random() * numCount)];
+  }
+
+  chrome.storage.sync.set({loadedCC: newCC});
+  return newCC;
 }

@@ -1,0 +1,27 @@
+p.description {
+  margin-top: 0;
+  line-height: 1em;
+  font-size: 11px;
+}
+
+h3.label {
+  margin-bottom: 5px;
+}
+
+input[type="checkbox"] {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+div.description-block {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#save, #save-status {
+  display: inline-block;
+}
+
+.warning {
+  color: red;
+}
