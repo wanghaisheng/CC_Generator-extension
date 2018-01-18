@@ -12,6 +12,15 @@
   <p class="description">User defined numbers that will be randomly selected when the "Custom" card type is
     selected. <span class="warning">This field is not secure. Do not use real credit card data.</span></p>
   <textarea id="custom-numbers" rows="8" cols="50"></textarea>
+  <input type="checkbox" id="auto-complete-number">
+  <div class="description-block">
+    <h3 class="label">Autocomplete custom numbers</h3>
+    <p class="description">Generate number using given custom numbers as a prefix.</p>
+  </div>
+  <div id="auto-complete-number-container">
+    <p id="auto-complete-number-length-description">Number length</p>
+    <input type="number" size="2" id="auto-complete-number-length">
+  </div>
 </div>
 
 <div id="new-number-toggle-wrapper">

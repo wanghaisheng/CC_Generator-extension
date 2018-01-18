@@ -25,3 +25,21 @@ div.description-block {
 .warning {
   color: red;
 }
+
+.hidden {
+  display: none;
+}
+
+#auto-complete-number-container {
+  margin-left: 15px;
+}
+
+#auto-complete-number-length-description {
+  margin: 0;
+  display: inline-block;
+}
+
+#auto-complete-number-length {
+  display: inline-block;
+  width: 50px;
+}

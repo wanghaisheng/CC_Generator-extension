@@ -8,6 +8,8 @@ var newNumberOnLoad;
 var loadedCC;
 var setNumbersText = "Set numbers in options";
 var optionsLink;
+var autoCompleteNumber;
+var autoCompleteNumberLength;
 
 document.addEventListener('DOMContentLoaded', function () {
   ccIssuer = document.getElementById("cc_issuer");
@@ -20,12 +22,16 @@ document.addEventListener('DOMContentLoaded', function () {
     customNumbers: [],
     newNumberOnLoad: true,
     loadedCC: 0,
-    selected_issuer: false
+    selected_issuer: false,
+    autoCompleteNumber: false,
+    autoCompleteNumberLength: 13
   }, function (items) {
     customNumbers = items.customNumbers;
     newNumberOnLoad = items.newNumberOnLoad;
     loadedCC = items.loadedCC;
     issuer = items.selected_issuer;
+    autoCompleteNumber = items.autoCompleteNumber;
+    autoCompleteNumberLength = items.autoCompleteNumberLength;
 
     if (issuer) {
       document.querySelector('#cc_issuer [value="' + issuer + '"]').selected = true;
@@ -107,9 +113,24 @@ function getCCNumber(issuer) {
       }
       break;
     case "custom":
-      return getCustomValue();
-  }
+      if (autoCompleteNumber) {
+        num_digits = autoCompleteNumberLength;
+        var number = getCustomValue();
 
+        digits = number.toString().split("");
+        for (var i = 0; i < digits.length; i++) {
+          digits[i] = parseInt(digits[i]);
+        }
+        if (digits.length >= num_digits) {
+          // make sure the number isn't greater then max set length
+          // also make sure there's room for the check digit
+          digits = digits.slice(0, num_digits - 1);
+        }
+      }
+      else {
+        return getCustomValue();
+      }
+  }
 
   digits[num_digits - 1] = 'p';
 
