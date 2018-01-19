@@ -1,9 +1,8 @@
 {
   "manifest_version": 2,
-
   "name": "CC Generator",
   "description": "Generates valid credit card numbers for development use.",
-  "version": "1.2",
+  "version": "1.2.1",
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
@@ -13,7 +12,6 @@
     "page": "options.html",
     "chrome_style": true
   },
-
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html",

@@ -55,7 +55,7 @@ function addListeners() {
   ccIssuer.addEventListener('change', function () {
     issuer = ccIssuer.options[ccIssuer.selectedIndex].value;
     ccNumber.value = getCCNumber(issuer);
-    chrome.storage.sync.set({'selected_issuer': issuer});
+    chrome.storage.sync.set({ 'selected_issuer': issuer });
   });
 
   ccNumber.addEventListener('click', function () {
@@ -156,7 +156,7 @@ function getCCNumber(issuer) {
   digits[num_digits - 1] = (-(sum % 10) + 10) % 10;
 
   var newCC = digits.join("");
-  chrome.storage.sync.set({loadedCC: newCC});
+  chrome.storage.sync.set({ loadedCC: newCC });
   return newCC;
 }
 
@@ -170,6 +170,6 @@ function getCustomValue() {
     newCC = customNumbers[Math.floor(Math.random() * numCount)];
   }
 
-  chrome.storage.sync.set({loadedCC: newCC});
+  chrome.storage.sync.set({ loadedCC: newCC });
   return newCC;
 }
