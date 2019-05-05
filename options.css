@@ -18,6 +18,15 @@ div.description-block {
   vertical-align: middle;
 }
 
+#save-wrapper {
+  float: left;
+  margin-bottom: 10px;
+}
+
+#donation-wrapper {
+  float: right;
+}
+
 #save, #save-status {
   display: inline-block;
 }
