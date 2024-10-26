@@ -1,4 +1,5 @@
-# CC Generator
+# shop conna CC Generator extension
+
 A chrome extenstion that generates valid credit card numbers for development use.
 
 [Download from the google chrome store](https://chrome.google.com/webstore/detail/cc-generator/klcpekhgaebbghffffpofgaipfcdplkc)
